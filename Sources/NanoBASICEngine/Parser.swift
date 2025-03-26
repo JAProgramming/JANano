@@ -212,20 +212,20 @@ public class Parser {
     
     // Parse a GOTO statement from the "statement" production rule in grammar.txt
     func parseGoTo(lineNumber: Int16) throws -> GoToCall? {
-    // YOU FILL IN HERE
-    if case let .goto(startRange) = current {
-        index += 1
-        guard case let .number(numberRange, lineNumber) = current else {
-             throw ParserError.ParseError(explanation: 
-                "Expected a number after goto token",
-                                         token: current)
-        }
-        index += 1
+        // YOU FILL IN HERE
+        if case let .goto(startRange) = current {
+            index += 1
+            guard case let .number(lineNumber, numberRange) = current else {
+                 throw ParserError.ParseError(explanation: 
+                    "Expected a number after goto token",
+                                             token: current)
+            }
+            index += 1
 
-        return GoToCall(gotoLine: number, line: lineNumber, range: startRange.lowerBound..<numberRange.upperBound)
+            return GoToCall(gotoLine: number, line: lineNumber, range: startRange.lowerBound..<numberRange.upperBound)
+        }
+        return nil
     }
-    return nil
-}
     
     // Parse an IF statement from the "statement" production rule in grammar.txt
     func parseIf(lineNumber: Int16) throws -> IfStatement? {
