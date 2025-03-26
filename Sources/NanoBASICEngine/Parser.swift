@@ -215,13 +215,14 @@ public class Parser {
     // YOU FILL IN HERE
     if case let .goto(startRange) = current {
         index += 1
-        guard case let number = current else {
+        guard case let .number(numberRange, lineNumber) = current else {
              throw ParserError.ParseError(explanation: 
                 "Expected a number after goto token",
                                          token: current)
         }
+        index += 1
 
-        return GoToCall(gotoLine: number, line: lineNumber, range: startRange.lowerBound..<number.range.upperBound)
+        return GoToCall(gotoLine: number, line: lineNumber, range: startRange.lowerBound..<numberRange.upperBound)
     }
     return nil
 }
