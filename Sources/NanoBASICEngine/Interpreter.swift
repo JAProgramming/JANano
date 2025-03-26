@@ -91,10 +91,16 @@ extension BASICPlayer {
             statementIndex += 1
 
             //had some help with chatGpt for structure due to me being a little lost at first
-            case let varSet as VarSet:
+            case let varSet as VarSet: 
                 let newVal = evaluate(expression: varSet.value)
                 variableTable[varSet.name.lowercased()] = newVal
                 statementIndex += 1
+            case let gotoStatement as GotoStatement:
+                if let targetIndex = findLineIndex(lineNumber: gotoStatement.line) else {
+                    InterpreterError.interpreterError(explanation: "could not find goto line number", statement: gotoStatement)
+                    statementIndex += 1
+                }
+                
         // YOU FILL IN HERE the other cases: LET, IF, GOTO, GOSUB, RETURN
         default:
             break
