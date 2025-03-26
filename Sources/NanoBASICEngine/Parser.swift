@@ -186,28 +186,29 @@ public class Parser {
         if case let .letT(startRange) = current {
             index += 1
             guard case let .variable(varRange, varName) = current else {
-                throw parseError..ParseError(explanation: 
+                throw ParserError.ParseError(explanation: 
                     "Expected to see a variable name after Let token",
                                              token: current)
             }
             index += 1
             guard case .equal = current else {
-                throw parseRError.ParseError(explanation: 
+                throw ParserError.ParseError(explanation: 
                     "Expected an equals sign after the name given",
                                              token: current)
             }
             index += 1
-            guard let expr = try? parseExpression() else {
-                throw parseError.ParseError(explanation: 
+            guard let expr = try parseExpression() else {
+                throw ParserError.ParseError(explanation: 
                 "Expected an expression after the equal sign", 
-                                            token: current))
+                                            token: current)
             }
             
             return VarSet(name: varName, value: expr, line: lineNumber, range: startRange.lowerBound..<expr.range.upperBound)
         }
+        
         return nil
 
-}
+    }
     
     // Parse a GOTO statement from the "statement" production rule in grammar.txt
     func parseGoTo(lineNumber: Int16) throws -> GoToCall? {
