@@ -181,6 +181,27 @@ public class Parser {
     // Parse a LET statement from the "statement" production rule in grammar.txt
     func parseLet(lineNumber: Int16) throws -> VarSet? {
         // YOU FILL IN HERE
+        if case let .letT(startRange) = current {
+            while true {
+                index += 1
+                if case let .variable(varRange, varName) = current {
+                    index += 1
+                } else if case let .equal = current {
+                    index += 1
+                } else if let expr = try parseExpression() {
+                    continue
+                } else {
+                    break
+                }
+            }
+
+            if index <= 1 {
+                throw ParserError.ParseError(explanation: 
+                    "Expected a variable, equals, and an expression following a let statement",
+                                             token: current)
+            }
+            return VarSet(name: varName, value: expr, line: lineNumber, range: startRange.loweBound..<expr.range.upperBound)
+        }
         return nil
     }
     
