@@ -95,7 +95,7 @@ extension BASICPlayer {
                 let newVal = evaluate(expression: varSet.value)
                 variableTable[varSet.name.lowercased()] = newVal
                 statementIndex += 1
-            case let gotoStatement as GoToSCall:
+            case let gotoStatement as GoToCall:
                 if let targetIndex = findLineIndex(lineNumber: gotoStatement.gotoLine) {
                     statementIndex = targetIndex
                 } else {
