@@ -213,7 +213,7 @@ public class Parser {
     // Parse a GOTO statement from the "statement" production rule in grammar.txt
     func parseGoTo(lineNumber: Int16) throws -> GoToCall? {
     // YOU FILL IN HERE
-    if case lest .goto(startRange) = current {
+    if case let .goto(startRange) = current {
         index += 1
         guard case let number = current else {
              throw ParserError.ParseError(explanation: 
@@ -221,7 +221,7 @@ public class Parser {
                                          token: current)
         }
 
-        return goToCall(gotoLine: number, line: lineNumber, range: startRanger.lowerBound..<number.range.upperBound)
+        return GoToCall(gotoLine: number, line: lineNumber, range: startRange.lowerBound..<number.range.upperBound)
     }
     return nil
 }
