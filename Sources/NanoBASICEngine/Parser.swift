@@ -181,29 +181,33 @@ public class Parser {
     // Parse a LET statement from the "statement" production rule in grammar.txt
     func parseLet(lineNumber: Int16) throws -> VarSet? {
         // YOU FILL IN HERE
+        // Had help with chatgpt due to having hard time starting 
+        // chatgpt helped me with the idea to use the guard keywork
         if case let .letT(startRange) = current {
-            while true {
-                index += 1
-                if case let .variable(varRange, varName) = current {
-                    index += 1
-                } else if case let .equal = current {
-                    index += 1
-                } else if let expr = try parseExpression() {
-                    continue
-                } else {
-                    break
-                }
-            }
-
-            if index <= 1 {
-                throw ParserError.ParseError(explanation: 
-                    "Expected a variable, equals, and an expression following a let statement",
+            index += 1
+            guard case let .variable(varRange, varName) = current else {
+                throw parseError..ParseError(explanation: 
+                    "Expected to see a variable name after Let token",
                                              token: current)
             }
-            return VarSet(name: varName, value: expr, line: lineNumber, range: startRange.loweBound..<expr.range.upperBound)
+            index += 1
+            guard case .equal = current else {
+                throw parseRError.ParseError(explanation: 
+                    "Expected an equals sign after the name given",
+                                             token: current)
+            }
+            index += 1
+            guard let expr = try? parseExpression() else {
+                throw parseError.ParseError(explanation: 
+                "Expected an expression after the equal sign", 
+                                            token: current))
+            }
+            
+            return VarSet(name: varName, value: expr, line: lineNumber, range: startRange.lowerBound..<expr.range.upperBound)
         }
         return nil
-    }
+
+}
     
     // Parse a GOTO statement from the "statement" production rule in grammar.txt
     func parseGoTo(lineNumber: Int16) throws -> GoToCall? {
