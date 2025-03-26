@@ -92,7 +92,7 @@ extension BASICPlayer {
 
             //had some help with chatGpt for structure due to me being a little lost at first
             case let varSet as VarSet:
-                let newVal = interpret(expression: varSet.value)
+                let newVal = evaluateExpression(varSet.value)
                 variableTable[varSet.name.lowercased()] = newVal
                 statementIndex += 1
         // YOU FILL IN HERE the other cases: LET, IF, GOTO, GOSUB, RETURN
