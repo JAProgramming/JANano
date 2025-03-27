@@ -143,6 +143,8 @@ extension BASICPlayer {
                 return leftExpression < rightExpression
             case .lessThanEqual(_):
                 return leftExpression <= rightExpression
+            default:
+                return false
         }
     }
     
