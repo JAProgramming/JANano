@@ -125,23 +125,23 @@ extension BASICPlayer {
     
     // evaluation a boolean expression by checking its respective operator and
     // evaluating each of the two operands
-    public func evaluate(booleanExpression: BooleanExpression) -> Bool {
+        public func evaluate(booleanExpression: BooleanExpression) -> Bool {
         // YOU FILL IN HERE
         let leftExpression = evaluate(expression: booleanExpression.left)
         let rightExpression = evaluate(expression: booleanExpression.right)
 
         switch booleanExpression.operation {
-            case .equal:
+            case .equal(let range):
                 return leftExpression == rightExpression
-            case .notEqual:
+            case .notEqual(let range):
                 return leftExpression != rightExpression
-            case .greaterThan:
+            case .greaterThan(let range):
                 return leftExpression > rightExpression
-            case .greaterThanEqual:
+            case .greaterThanEqual(let range):
                 return  leftExpression >= rightExpression
-            case .lessThan:
+            case .lessThan(let range):
                 return leftExpression < rightExpression
-            case .lessThanEqual:
+            case .lessThanEqual(let range):
                 return leftExpression <= rightExpression
         }
     }
