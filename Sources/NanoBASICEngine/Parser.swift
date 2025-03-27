@@ -1,4 +1,4 @@
-// 
+//
 //  Parser.swift
 //  NanoBASIC Parser — Creates Nodes from Tokens
 // Had ChatGPT help with debugging the code as well as helped me with the use of the guard cases
@@ -192,6 +192,7 @@ public class Parser {
                throw ParserError.ParseError(explanation: "Does not have a valid operator", token: token)
         }
 
+        print("Booleon operation: ", operatorToken)
         index += 1
 
         guard let rightExpression = try parseExpression() else {
@@ -208,7 +209,7 @@ public class Parser {
     
     // Parse a GOSUB statement from the "statement" production rule in grammar.txt
     func parseGoSub(lineNumber: Int16) throws -> GoSubCall? {
-        // YOU FILL IN HERE
+        //YOUR CODE HERE
         return nil
     }
     
