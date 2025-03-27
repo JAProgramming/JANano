@@ -127,10 +127,10 @@ extension BASICPlayer {
     // evaluating each of the two operands
     public func evaluate(booleanExpression: BooleanExpression) -> Bool {
         // YOU FILL IN HERE
-        let leftExpression = evaluate(expression: BooleanExpression.left)
-        let rightExpression = evaluate(expression: BooleanExpression.right)
+        let leftExpression = evaluate(expression: booleanExpression.left)
+        let rightExpression = evaluate(expression: booleanExpression.right)
 
-        switch BooleanExpression.operation {
+        switch booleanExpression.operation {
             case .equal:
                 return leftExpression == rightExpression
             case .notEqual:
