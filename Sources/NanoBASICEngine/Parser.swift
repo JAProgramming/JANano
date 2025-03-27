@@ -182,7 +182,7 @@ public class Parser {
          index += 1
 
          default:
-            ParserError.ParseError(explanation: "Not a valid operator", token: current)
+           throw ParserError.ParseError(explanation: "Not a valid operator", token: current)
         }
 
          guard case let rightExpression = try parseExpression()
