@@ -131,17 +131,17 @@ extension BASICPlayer {
         let rightExpression = evaluate(expression: booleanExpression.right)
 
         switch booleanExpression.operation {
-            case .equal(let range):
+            case .equal(_):
                 return leftExpression == rightExpression
-            case .notEqual(let range):
+            case .notEqual(_):
                 return leftExpression != rightExpression
-            case .greaterThan(let range):
+            case .greaterThan(_):
                 return leftExpression > rightExpression
-            case .greaterThanEqual(let range):
+            case .greaterThanEqual(_):
                 return  leftExpression >= rightExpression
-            case .lessThan(let range):
+            case .lessThan(_):
                 return leftExpression < rightExpression
-            case .lessThanEqual(let range):
+            case .lessThanEqual(_):
                 return leftExpression <= rightExpression
         }
     }
