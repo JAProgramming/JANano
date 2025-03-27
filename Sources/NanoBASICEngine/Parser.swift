@@ -169,28 +169,25 @@ public class Parser {
     func parseBooleanExpression() throws -> BooleanExpression? {
         // YOU FILL IN HERE
         let leftExpression = try parseExpression() 
-        
+        let operatorToken: Token
 
-        guard case let .equals(opRange) = current
-
-         ?? case let .notEquals(opRange) = current
-         ?? case let .greaterThan(opRange) = current
-         ?? case let .greaterThanEqual(opRange) = current
-         ?? case let .lessThan(opRange) = current
-         ?? case let .lessThanEqual(opRange) = current
-
-         else {
-
-            throw ParserError.ParseError(explanation: "The relop is not a valid character token", token, current)
-         }
-
+        switch current {
+            let .equal(opRange),
+            let .notEqual(opRange),
+            let .greaterThan(opRange),
+            let .greaterThanEqual(opRange),
+            let .lessThan(opRange),
+            let .lessThanEqual(opRange):
          operatorToken = current
          index += 1
+
+         default:
+            ParserError.ParseError(explanation: "Not a valid operator", token: current)
+        }
 
          guard case let rightExpression = try parseExpression()
 
          return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: lefExpression.range..<rightExpression.range )
-
     }
         
     // MARK: Parsing Statements
