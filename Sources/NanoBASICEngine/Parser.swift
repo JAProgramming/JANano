@@ -200,7 +200,7 @@ public class Parser {
 
         let leftRange = leftExpression.range
         let rightRange = rightExpression.range
-        
+
          return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: leftRange.lowerBound..<rightRange.upperBound)
     }
         
@@ -264,6 +264,26 @@ public class Parser {
     // Parse an IF statement from the "statement" production rule in grammar.txt
     func parseIf(lineNumber: Int16) throws -> IfStatement? {
         // YOU FILL IN HERE
+        if case let .ifT(startRange) = current {
+             index += 1
+            guard let boolean = try parseBooleanExpression() else {
+             throw ParserError.ParseError(explanation: "There is no boolean expression", token: current)
+             }
+
+            guard case let .then(thenRange) = current {
+                throw ParserError.ParseError(explanation: "Expecting a then token after the boolean expression", token: current)
+             }
+            index += 1
+            guard let statement = try parseStatement(lineNumber: lineNumber) else {
+             throw ParserError.ParseError(explanation: "There was expected to be a stateent", token: current)
+            }
+
+            let statementRange = statement.range
+
+            return IfStatement(booleanExpression: boolean, thenStatement: statement, line: lineNumber, range: startRange.lowerBound..<statementRange.upperBound)
+
+        }
+
         return nil
     }
     
