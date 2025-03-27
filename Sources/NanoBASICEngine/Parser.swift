@@ -168,11 +168,11 @@ public class Parser {
     // This function corresponds to the "relop" production rule in grammar.txt
     func parseBooleanExpression() throws -> BooleanExpression? {
         // YOU FILL IN HERE
-        let leftExpression = try parseExpression()
-
-        guard let token = current else {
-            throw ParserError.ParseError(explanation: "Does not have correct operator", token: nil)
+        guard let leftExpression = try parseExpression() else {
+            throw ParserError.ParseError(explanation: "This is an invalid expression", token: current)
         }
+
+        let token = current
 
         let operatorToken: Token
         switch token {
@@ -194,9 +194,15 @@ public class Parser {
 
         index += 1
 
-        let rightExpression = try parseExpression()
+        guard let rightExpression = try parseExpression() else {
+            throw ParserError.ParseError(explanation: "Invalid expression", token: current)
+        }
 
-         return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: leftExpression.range.lowerBound..<rightExpression.range.upperBound)
+        guard let leftRange = leftExpression.range, let rightRange = rightExpression.range else {
+            throw ParserError.ParseError(explanation: "Invalid range", token: current)
+        }
+
+         return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: leftRange.lowerBound..<rightRange.upperBound)
     }
         
     // MARK: Parsing Statements
