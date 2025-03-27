@@ -1,6 +1,7 @@
 //
 //  Parser.swift
 //  NanoBASIC Parser — Creates Nodes from Tokens
+// Had ChatGPT help with debugging the code as well as helped me with the use of the guard cases
 //
 //  Copyright (c) 2019 David Kopec
 //  MIT License (see LICENSE)
@@ -167,9 +168,31 @@ public class Parser {
     // This function corresponds to the "relop" production rule in grammar.txt
     func parseBooleanExpression() throws -> BooleanExpression? {
         // YOU FILL IN HERE
-        return nil
+        let leftExpression = try parseExpression() 
+        
+
+        gaurd case let .equals(opRange) = current
+
+         ?? case let .notEquals(opRange) = current
+         ?? case let .greaterThan(opRange) = current
+         ?? case let .greaterThanEqual(opRange) = current
+         ?? case let .lessThan(opRange) = current
+         ?? case let .lessThanEqual = current
+
+         else {
+
+            throw ParserError.ParseError(explanation: "The relop is not a valid character token", token, current)
+         }
+
+         operatorToken = current
+         index += 1
+
+         guard case  let rightExpression = try parseExpression()
+
+         return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: lefExpression.range..<rightExpression.range )
+
     }
-    
+        
     // MARK: Parsing Statements
     
     // Parse a GOSUB statement from the "statement" production rule in grammar.txt
