@@ -168,26 +168,35 @@ public class Parser {
     // This function corresponds to the "relop" production rule in grammar.txt
     func parseBooleanExpression() throws -> BooleanExpression? {
         // YOU FILL IN HERE
-        let leftExpression = try parseExpression() 
-        let operatorToken: Token
+        let leftExpression = try parseExpression()
 
-        switch current {
-            let .equal(opRange),
-            let .notEqual(opRange),
-            let .greaterThan(opRange),
-            let .greaterThanEqual(opRange),
-            let .lessThan(opRange),
-            let .lessThanEqual(opRange):
-         operatorToken = current
-         index += 1
-
-         default:
-           throw ParserError.ParseError(explanation: "Not a valid operator", token: current)
+        guard let token = current else {
+            throw ParserError.ParseError(explanation: "Does not have correct operator", token: nil)
         }
 
-         guard case let rightExpression = try parseExpression()
+        let operatorToken: Token
+        switch token {
+            case let .equal(opRange):
+                operatorToken = .equal(opRange)
+            case let .notEqual(opRange):
+                operatorToken = .notEqual(opRange)
+            case let .greaterThan(opRange):
+                operatorToken = .greaterThan(opRange)
+            case let .greaterThanEqual(opRange):
+                operatorToken = .greaterThanEqual(opRange)
+            case let .lessThan(opRange):
+                operatorToken = .lessThan(opRange)
+            case let .lessThanEqual(opRange):
+                operatorToken = .lessThanEqual(opRange)
+            default:
+               throw ParserError.ParseError(explanation: "Does not have a valid operator", token: token)
+        }
 
-         return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: lefExpression.range..<rightExpression.range )
+        index += 1
+
+        let rightExpression = try parseExpression()
+
+         return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: leftExpression.range.lowerBound..<rightExpression.range.upperBound)
     }
         
     // MARK: Parsing Statements
