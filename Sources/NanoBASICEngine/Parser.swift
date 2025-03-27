@@ -270,11 +270,11 @@ public class Parser {
              throw ParserError.ParseError(explanation: "There is no boolean expression", token: current)
              }
 
-            guard case let .then(thenRange) = current {
+            guard case let .then(thenRange) = current else {
                 throw ParserError.ParseError(explanation: "Expecting a then token after the boolean expression", token: current)
              }
             index += 1
-            guard let statement = try parseStatement(lineNumber: lineNumber) else {
+            guard let statement = try parseStatement(line: lineNumber) else {
              throw ParserError.ParseError(explanation: "There was expected to be a stateent", token: current)
             }
 
