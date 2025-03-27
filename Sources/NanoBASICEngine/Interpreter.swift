@@ -111,7 +111,7 @@ extension BASICPlayer {
                             print("skipped then statement")
                         }
 
-                        index += 1
+            index += 1
 
         // YOU FILL IN HERE the other cases: LET, IF, GOTO, GOSUB, RETURN
         default:
