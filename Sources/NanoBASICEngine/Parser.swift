@@ -189,7 +189,7 @@ public class Parser {
             case let .lessThanEqual(opRange):
                 operatorToken = .lessThanEqual(opRange)
             default:
-               throw ParserError.ParseError(explanation: "Does not have a valid operator", token: token)
+               throw ParserError.ParseError(explanation: "Does not have a valid operator", token: current)
         }
 
         index += 1
