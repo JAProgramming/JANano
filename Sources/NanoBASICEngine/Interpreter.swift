@@ -107,10 +107,11 @@ extension BASICPlayer {
                          if condition {
                             try interpret(statement: ifStatement.thenStatement)
                         } else {
-                            break;
+                             statementIndex += 1
+                             break;
                         }
                     
-                    statementIndex += 1
+                    
 
         // YOU FILL IN HERE the other cases: LET, IF, GOTO, GOSUB, RETURN
         default:
