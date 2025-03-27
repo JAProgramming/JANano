@@ -172,10 +172,10 @@ public class Parser {
             throw ParserError.ParseError(explanation: "This is an invalid expression", token: current)
         }
 
-        let token = current
+        let leftRange = leftExpression.range
 
         let operatorToken: Token
-        switch token {
+        switch current {
             case let .equal(opRange):
                 operatorToken = .equal(opRange)
             case let .notEqual(opRange):
@@ -192,14 +192,12 @@ public class Parser {
                throw ParserError.ParseError(explanation: "Does not have a valid operator", token: token)
         }
 
-        print("Booleon operation: ", operatorToken)
         index += 1
 
         guard let rightExpression = try parseExpression() else {
             throw ParserError.ParseError(explanation: "Invalid expression", token: current)
         }
 
-        let leftRange = leftExpression.range
         let rightRange = rightExpression.range
 
          return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: leftRange.lowerBound..<rightRange.upperBound)
