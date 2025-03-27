@@ -127,7 +127,25 @@ extension BASICPlayer {
     // evaluating each of the two operands
     public func evaluate(booleanExpression: BooleanExpression) -> Bool {
         // YOU FILL IN HERE
-        return false
+        let leftExpression = evaluate(expression: BooleanExpression.left)
+        let rightExpression = evaluate(expression: BooleanExpression.right)
+
+        switch BooleanExpression.operation {
+            case .equal:
+                return leftExpression == rightExpression
+            case .notEqual:
+                return leftExpression != rightExpression
+            case .greaterThan:
+                return leftExpression > rightExpression
+            case .greaterThanEqual:
+                return  leftExpression >= rightExpression
+            case .lessThan:
+                return leftExpression < rightExpression
+            case .lessThanEqual:
+                return leftExpression <= rightExpression
+            default:
+                return false
+        }
     }
     
     // evaluate an Expression by using Swift's built-in arithmetic facilities
