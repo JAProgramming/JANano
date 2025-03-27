@@ -137,7 +137,7 @@ extension BASICPlayer {
             case .equal(_):
                 return leftExpression == rightExpression
             case .notEqual(_):
-                return leftExpression <> rightExpression
+                return leftExpression != rightExpression
             case .greaterThan(_):
                 return leftExpression > rightExpression
             case .greaterThanEqual(_):
