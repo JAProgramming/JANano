@@ -103,9 +103,13 @@ extension BASICPlayer {
                 }
             case let ifStatement as IfStatement:
                 let condition = evaluate(booleanExpression: ifStatement.booleanExpression)
-                if condition
-                {
-                    try interpret(statement: ifStatement.thenStatement)
+                if condition {
+                    switch ifStatement.thenStatement { //Used Claude AI for help with switch for debugging
+                        case let nestedStatement as Statement:
+                            try interpret(statement: nestedStatement)
+                        default: 
+                            break
+                    }
                 }
 
                 statementIndex += 1
@@ -125,26 +129,24 @@ extension BASICPlayer {
     
     // evaluation a boolean expression by checking its respective operator and
     // evaluating each of the two operands
-        public func evaluate(booleanExpression: BooleanExpression) -> Bool {
+    public func evaluate(booleanExpression: BooleanExpression) -> Bool {
         // YOU FILL IN HERE
         let leftExpression = evaluate(expression: booleanExpression.left)
         let rightExpression = evaluate(expression: booleanExpression.right)
 
         switch booleanExpression.operation {
-            case .equal(_):
+            case .equal(let range):
                 return leftExpression == rightExpression
-            case .notEqual(_):
+            case .notEqual(let range):
                 return leftExpression != rightExpression
-            case .greaterThan(_):
+            case .greaterThan(let range):
                 return leftExpression > rightExpression
-            case .greaterThanEqual(_):
+            case .greaterThanEqual(let range):
                 return  leftExpression >= rightExpression
-            case .lessThan(_):
+            case .lessThan(let range):
                 return leftExpression < rightExpression
-            case .lessThanEqual(_):
+            case .lessThanEqual(let range):
                 return leftExpression <= rightExpression
-            default:
-                return false
         }
     }
     
