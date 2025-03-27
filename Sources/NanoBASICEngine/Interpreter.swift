@@ -102,10 +102,10 @@ extension BASICPlayer {
                     throw InterpreterError.InterpreterError(explanation: "could not find goto line number", statement: gotoStatement)
                 }
             case let ifStatement as IfStatement:
-                let condition = try ifStatement.booleanExpression.evaluate(condition: &condition)
+                let condition = try ifStatement.booleanExpression.evaluate(condition: &self)
                 if condition
                 {
-                    try interpret(statement: ifStatement.thenStatment)
+                    try interpret(statement: ifStatement.thenStatement)
                 }
 
                 statementIndex += 1
