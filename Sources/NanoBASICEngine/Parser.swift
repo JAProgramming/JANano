@@ -198,10 +198,9 @@ public class Parser {
             throw ParserError.ParseError(explanation: "Invalid expression", token: current)
         }
 
-        guard let leftRange = leftExpression.range, let rightRange = rightExpression.range else {
-            throw ParserError.ParseError(explanation: "Invalid range", token: current)
-        }
-
+        let leftRange = leftExpression.range
+        let rightRange = rightExpression.range
+        
          return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: leftRange.lowerBound..<rightRange.upperBound)
     }
         
