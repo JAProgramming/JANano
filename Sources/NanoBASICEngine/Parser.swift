@@ -171,13 +171,13 @@ public class Parser {
         let leftExpression = try parseExpression() 
         
 
-        gaurd case let .equals(opRange) = current
+        guard case let .equals(opRange) = current
 
          ?? case let .notEquals(opRange) = current
          ?? case let .greaterThan(opRange) = current
          ?? case let .greaterThanEqual(opRange) = current
          ?? case let .lessThan(opRange) = current
-         ?? case let .lessThanEqual = current
+         ?? case let .lessThanEqual(opRange) = current
 
          else {
 
@@ -187,7 +187,7 @@ public class Parser {
          operatorToken = current
          index += 1
 
-         guard case  let rightExpression = try parseExpression()
+         guard case let rightExpression = try parseExpression()
 
          return BooleanExpression(operation: operatorToken, left: leftExpression, right: rightExpression, range: lefExpression.range..<rightExpression.range )
 
