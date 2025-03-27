@@ -101,18 +101,14 @@ extension BASICPlayer {
                 } else {
                     throw InterpreterError.InterpreterError(explanation: "could not find goto line number", statement: gotoStatement)
                 }
-            case let ifStatement as IfStatement:
-                let condition = evaluate(booleanExpression: ifStatement.booleanExpression)
-                if condition {
-                    switch ifStatement.thenStatement { //Used Claude AI for help with switch for debugging
-                        case let nestedStatement as Statement:
-                            try interpret(statement: nestedStatement)
-                        default: 
-                            break
-                    }
-                }
+                //Clause ai gave this code after I tried myself 
+                case let ifStatement as IfStatement:
+                    let condition = evaluate(booleanExpression: ifStatement.booleanExpression)
+                         if condition {
+                            try interpret(statement: ifStatement.thenStatement)
+                        }
+                     statementIndex += 1
 
-                statementIndex += 1
         // YOU FILL IN HERE the other cases: LET, IF, GOTO, GOSUB, RETURN
         default:
             break
@@ -187,3 +183,4 @@ extension BASICPlayer {
         }
     }
 }
+
