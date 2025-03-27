@@ -105,10 +105,9 @@ extension BASICPlayer {
                 case let ifStatement as IfStatement:
                     let condition = evaluate(booleanExpression: ifStatement.booleanExpression)
                          if condition {
-                            print("Executing then statement")
                             try interpret(statement: ifStatement.thenStatement)
                         } else {
-                            print("skipped then statement")
+                            break;
                         }
                     
                     statementIndex += 1
@@ -138,7 +137,7 @@ extension BASICPlayer {
             case .equal(_):
                 return leftExpression == rightExpression
             case .notEqual(_):
-                return leftExpression != rightExpression
+                return leftExpression <> rightExpression
             case .greaterThan(_):
                 return leftExpression > rightExpression
             case .greaterThanEqual(_):
