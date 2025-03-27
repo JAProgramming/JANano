@@ -105,13 +105,13 @@ extension BASICPlayer {
                 case let ifStatement as IfStatement:
                     let condition = evaluate(booleanExpression: ifStatement.booleanExpression)
                          if condition {
+                            print("Executing then statement")
                             try interpret(statement: ifStatement.thenStatement)
-                            print("Executed then statement")
                         } else {
                             print("skipped then statement")
                         }
                     
-                        statementIndex += 1
+                    statementIndex += 1
 
         // YOU FILL IN HERE the other cases: LET, IF, GOTO, GOSUB, RETURN
         default:
