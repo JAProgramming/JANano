@@ -185,7 +185,7 @@ public class Parser {
         // chatgpt helped me with the idea to use the guard keywork
         if case let .letT(startRange) = current {
             index += 1
-            guard case let .variable(varRange, varName) = current else {
+            guard case let .variable(_, varName) = current else {
                 throw ParserError.ParseError(explanation: 
                     "Expected to see a variable name after Let token",
                                              token: current)
@@ -205,7 +205,7 @@ public class Parser {
             
             return VarSet(name: varName, value: expr, line: lineNumber, range: startRange.lowerBound..<expr.range.upperBound)
         }
-        
+
         return nil
 
     }
@@ -215,14 +215,14 @@ public class Parser {
         // YOU FILL IN HERE
         if case let .goto(startRange) = current {
             index += 1
-            guard case let .number(lineNumber, numberRange) = current else {
+            guard case let .number(numberRange, targetLine) = current else {
                  throw ParserError.ParseError(explanation: 
                     "Expected a number after goto token",
                                              token: current)
             }
             index += 1
 
-            return GoToCall(gotoLine: number, line: lineNumber, range: startRange.lowerBound..<numberRange.upperBound)
+            return GoToCall(gotoLine: targetLine, line: lineNumber, range: startRange.lowerBound..<numberRange.upperBound)
         }
         return nil
     }
